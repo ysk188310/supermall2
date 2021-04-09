@@ -5,6 +5,7 @@
       :class="{active: index===currentindex}"
       
       @click="tabclick(index)"
+     
      >
      <!-- Vue使用一个index记录选择的元素并更改样式 -->
             <span>{{item}}</span>
@@ -27,7 +28,8 @@ export default {
     },
     methods: {
         tabclick(index){
-            this.currentindex=index
+            this.currentindex=index,
+            this.$emit("changetab",index)
         }
     },
 }

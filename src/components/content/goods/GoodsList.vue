@@ -20,5 +20,12 @@ export default {
 }
 </script>
 <style scoped>
-
+.goods{
+    display: flex;
+    flex-wrap: wrap;
+    /* 不包裹 需要设置宽度百分比*/
+    justify-content: space-around;
+    /* 均等分 */
+    padding: 3px;
+}
 </style>
