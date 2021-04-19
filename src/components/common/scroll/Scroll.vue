@@ -24,7 +24,7 @@ export default {
         }
     },
     mounted() {
-        // 1.创建scroll对象
+        // 1.创建scroll对象初始化scroll对象
        this.scroll=new BScroll(this.$refs.wrapper,{
            click:true,
            probeType:this.probeType,
@@ -35,19 +35,28 @@ export default {
     this.scroll.on('scroll',(position)=>{
         // console.log(position);
         this.$emit('scroll',position) //子传父
-    }),
-    // 上拉加载更多
-    this.scroll.on('pullingUp',()=>{
-       this.$emit('pullingUp')
     })
+   
+    if(this.pullupload){
+     // 上拉加载更多
+    this.scroll.on('pullingUp',()=>{
+       this.scroll&&this.$emit('pullingUp')//判断有没有this.scroll
+    })
+    }
     },
 
     methods: {
    scrollTo(x,y,time=500){
        this.scroll.scrollTo(x,y,time)
    },
-   finishPull(){
-       this.scroll.finishPullup();
+//    上拉加载更多
+//    finishPull(){
+//        this.scroll&&this.scroll.finishPullup();
+//    },
+   refresh(){
+      this.scroll&&this.scroll.refresh();
+    // console.log(123);
+    // console.log(this.scroll);
    }
    }
 }

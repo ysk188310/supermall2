@@ -1,6 +1,6 @@
 <template>
-    <div class="goodslistitem">
-        <img :src="goodsitem.show.img" alt="">
+    <div class="goodslistitem" @click='toitem'>
+        <img v-lazy="showimage" alt="" @load="imageload" @click='toitem'>
         <div class="goodsinfo">
             <p>{{goodsitem.title}}</p>
         <span class="price">{{goodsitem.price}}</span>
@@ -17,7 +17,33 @@ export default {
                 return {}
             }
         }
-    }
+    },
+      computed:{
+        showimage(){
+           return this.goodsitem.image || this.goodsitem.show.img 
+        }
+    },
+    methods: {
+       imageload(){
+        //    因为不管是详情页还是home只要用item组件加载完就会执行刷新
+        // if(this.$router.path.indexOf('/home')){
+        //     this.$bus.$emit('homeItemImgLoad')
+        // }else if(this.$router.path.indexOf('/detail')){
+        //     this.$bus.$emit('detailItemImgLoad')
+        // }
+
+        this.$bus.$emit('itemimageload')
+       },
+       toitem(){
+        //  this.$router.push('./detail/'+this.goodsitem.iid);
+        this.$router.push({
+            path:'./detail'+this.goodsitem.iid,
+            query:{
+                iid:this.goodsitem.iid
+            }
+        })
+       }
+    },
 }
 </script>
 <style scoped>
